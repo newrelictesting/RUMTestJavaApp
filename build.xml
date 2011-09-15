@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Deploy From Eclipse to Tomcat" basedir=".">
+<property name="warfile" value="sanfran"/>
+<target name="unpack">
+<unwar src="${warfile}.war" dest="${warfile}" />
+</target>
+<target name="create">
+<war destfile="${warfile}.war" webxml="WebContent/WEB-INF/web.xml" update="true">
+<classes dir="build\classes"/>
+<fileset dir="WebContent">
+<exclude name="WEB-INF/web.xml"/>
+</fileset>
+</war>
+</target>
+<target name="copy">
+<copy todir="/Users/meixue/dev/apache-tomcat-6.0.18/webapps" overwrite="true">
+<fileset dir=".">
+<include name="*.war"/>
+</fileset>
+</copy>
+</target>
+<target name="deploy">
+<antcall target="create"/>
+<antcall target="copy"/>
+</target>
+</project>
+
